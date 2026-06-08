@@ -3,7 +3,9 @@ import { authSaga } from "@/store/modules/auth/authSaga";
 import { userSaga } from "@/store/modules/user/userSaga";
 import { clientsSaga } from "@/store/modules/clients/clientsSaga";
 import { proposalsSaga } from "@/store/modules/proposals/proposalsSaga";
+import { leadsSaga } from "@/store/modules/leads/leadsSaga";
+import { rolesSaga } from "@/store/modules/roles/rolesSaga";
 
 export default function* rootSaga() {
-  yield all([fork(authSaga), fork(userSaga), fork(clientsSaga), fork(proposalsSaga)]);
+  yield all([fork(authSaga), fork(userSaga), fork(clientsSaga), fork(proposalsSaga), fork(leadsSaga), fork(rolesSaga)]);
 }

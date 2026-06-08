@@ -21,8 +21,9 @@ const greatVibes = Great_Vibes({
 });
 
 export const metadata: Metadata = {
-  title: "Admin Boilerplate",
-  description: "Production-ready admin dashboard boilerplate",
+  title: "Apex",
+  description:
+    "Apex is an AI-powered business operating platform for managing leads, clients, projects, contracts, and team collaboration in one place.",
 };
 
 export default function RootLayout({

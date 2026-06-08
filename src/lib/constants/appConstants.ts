@@ -10,6 +10,8 @@ export const APP_ROUTES = {
   finance: "/finance",
   knowledge: "/knowledge",
   intelligence: "/intelligence",
+  leads: "/leads",
+  roles: "/roles",
   users: "/users",
   settings: "/settings",
 } as const;

@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Button, Tag, Tabs, Space, Typography, Spin, Modal, Form, Input as AntInput, Select, Drawer, message, Divider } from "antd";
-import { ArrowLeft, FileText, Edit3, Save, Trash2, Copy, Loader2, CheckCircle, XCircle, Sparkles, PenLine, Send, ShieldCheck } from "lucide-react";
+import { ArrowLeft, FileText, Edit3, Save, Trash2, Copy, Loader2, CheckCircle, XCircle, Sparkles, PenLine, Send, ShieldCheck, Download } from "lucide-react";
 import { MarkdownRenderer } from "@/components/features/ProposalIntelligence/MarkdownRenderer";
 import { AgentExecutionPanel } from "@/components/features/ProposalIntelligence/AgentExecutionPanel";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
@@ -283,6 +283,26 @@ export default function ProposalDetailPage() {
     }
   };
 
+  const handleDownloadPdf = async () => {
+    const token = storage.getAccessToken();
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"}${API_ENDPOINTS.proposals.downloadPdf(proposalId)}`,
+        { headers: token ? { Authorization: `Bearer ${token}` } : {} },
+      );
+      if (!res.ok) throw new Error("Download failed");
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `proposal-${proposalId}.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch {
+      message.error("Failed to download PDF");
+    }
+  };
+
   const handleGenerateContracts = async () => {
     setContractDrawerOpen(true);
     setContractGenLoading(true);
@@ -441,6 +461,7 @@ export default function ProposalDetailPage() {
             {proposal.shareToken && (
               <Button icon={<Copy className="w-4 h-4" />} onClick={copyShareLink}>Copy Share Link</Button>
             )}
+            <Button icon={<Download className="w-4 h-4" />} onClick={handleDownloadPdf}>Download PDF</Button>
             <Button icon={<Edit3 className="w-4 h-4" />} onClick={() => {
               editForm.setFieldsValue({ ...proposal, budget: proposal.pricing?.cost });
               setEditDrawerOpen(true);

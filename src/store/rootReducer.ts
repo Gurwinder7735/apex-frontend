@@ -3,12 +3,16 @@ import authReducer from "@/store/modules/auth/authSlice";
 import userReducer from "@/store/modules/user/userSlice";
 import clientsReducer from "@/store/modules/clients/clientsSlice";
 import proposalsReducer from "@/store/modules/proposals/proposalsSlice";
+import leadsReducer from "@/store/modules/leads/leadsSlice";
+import rolesReducer from "@/store/modules/roles/rolesSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   user: userReducer,
   clients: clientsReducer,
   proposals: proposalsReducer,
+  leads: leadsReducer,
+  roles: rolesReducer,
 });
 
 export default rootReducer;

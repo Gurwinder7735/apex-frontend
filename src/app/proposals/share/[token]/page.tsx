@@ -3,9 +3,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Tag, Typography, Spin, Input, Checkbox, Button, Space, message, Divider } from "antd";
-import { FileText, CheckCircle, XCircle, PenLine, ShieldCheck } from "lucide-react";
+import { FileText, CheckCircle, XCircle, PenLine, ShieldCheck, Download } from "lucide-react";
 import axios from "axios";
 import { MarkdownRenderer } from "@/components/features/ProposalIntelligence/MarkdownRenderer";
+import { API_ENDPOINTS } from "@/lib/api/endpoints";
 
 interface SignatureData {
   role: string;
@@ -276,6 +277,13 @@ export default function SharedProposalPage() {
               <div className="w-5 h-5 bg-white rounded-sm" />
             </div>
             <span className="text-sm font-semibold text-zinc-500">APEX</span>
+            <a
+              href={`${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"}${API_ENDPOINTS.proposals.sharedDownloadPdf(token)}`}
+              className="inline-flex items-center gap-1 text-xs text-zinc-400 hover:text-zinc-600 ml-3"
+              download
+            >
+              <Download className="w-3 h-3" /> PDF
+            </a>
           </div>
           <div className="flex items-center gap-1.5 flex-wrap">
             {isFullySigned && (

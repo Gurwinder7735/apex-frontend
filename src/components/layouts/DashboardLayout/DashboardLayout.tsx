@@ -24,6 +24,8 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
+  Target,
+  ShieldCheck,
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -45,11 +47,14 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 
   const user = auth.user;
   const isAdmin = auth.isAdmin;
+  const can = auth.can;
 
   const navigation = [
-    { name: "Clients", href: APP_ROUTES.clients, icon: Building2 },
-    { name: "Proposals", href: APP_ROUTES.proposals, icon: FileCheck },
+    ...(can("leads", "view") ? [{ name: "Leads", href: APP_ROUTES.leads, icon: Target }] : []),
+    ...(can("clients", "view") ? [{ name: "Clients", href: APP_ROUTES.clients, icon: Building2 }] : []),
+    ...(can("proposals", "view") ? [{ name: "Proposals", href: APP_ROUTES.proposals, icon: FileCheck }] : []),
     ...(isAdmin ? [{ name: "Users", href: APP_ROUTES.users, icon: Users }] : []),
+    ...(isAdmin ? [{ name: "Roles", href: "/roles", icon: ShieldCheck }] : []),
   ];
 
   const userMenuItems: MenuProps["items"] = [

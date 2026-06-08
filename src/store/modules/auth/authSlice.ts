@@ -58,6 +58,9 @@ const authSlice = createSlice({
         state.isAuthenticated = true;
       }
     },
+    updateUserProfile: (state, action: PayloadAction<User>) => {
+      state.user = action.payload;
+    },
     clearError: (state) => {
       state.error = null;
     },
@@ -75,6 +78,7 @@ export const {
   logoutSuccess,
   logoutFailure,
   hydrateAuth,
+  updateUserProfile,
   clearError,
 } = authSlice.actions;
 

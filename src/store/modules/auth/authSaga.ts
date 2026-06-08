@@ -13,9 +13,11 @@ import {
   logoutFailure,
   logoutRequest,
   logoutSuccess,
+  updateUserProfile,
 } from "./authSlice";
 import type { LoginPayload, RegisterPayload, TokenWithUser } from "./authTypes";
 import type { ApiResponse } from "@/types/api.types";
+import type { User } from "@/types/models/User";
 
 function setTokenCookie(token: string) {
   document.cookie = `access_token=${token}; path=/; max-age=604800; SameSite=Lax; Secure`;
@@ -44,6 +46,12 @@ function* loginWorker(action: { type: string; payload: LoginPayload }) {
     setTokenCookie(accessToken);
     setRefreshTokenCookie(refreshToken);
     yield put(loginSuccess(response.data));
+    try {
+      const meResponse: ApiResponse<User> = yield call(apiRequest, { url: API_ENDPOINTS.auth.me, method: "GET" });
+      yield put(updateUserProfile(meResponse.data));
+    } catch {
+      // permissions are optional — continue
+    }
     notification.success({ message: "Login successful" });
   } catch (error: unknown) {
     const message =
@@ -71,6 +79,12 @@ function* registerWorker(action: { type: string; payload: RegisterPayload }) {
     setTokenCookie(accessToken);
     setRefreshTokenCookie(refreshToken);
     yield put(registerSuccess(response.data));
+    try {
+      const meResponse: ApiResponse<User> = yield call(apiRequest, { url: API_ENDPOINTS.auth.me, method: "GET" });
+      yield put(updateUserProfile(meResponse.data));
+    } catch {
+      // permissions are optional — continue
+    }
     notification.success({ message: "Account created successfully" });
   } catch (error: unknown) {
     const message =
