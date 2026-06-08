@@ -49,17 +49,9 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 
   const navigation = [
     { name: "Clients", href: APP_ROUTES.clients, icon: Building2 },
-    { name: "Documents", href: APP_ROUTES.documents, icon: FileText },
-    { name: "Meetings", href: APP_ROUTES.meetings, icon: Calendar },
     { name: "Proposals", href: APP_ROUTES.proposals, icon: FileCheck },
-    { name: "Legal", href: APP_ROUTES.legal, icon: Scale },
-    { name: "Finance", href: APP_ROUTES.finance, icon: PiggyBank },
-    { name: "Knowledge", href: APP_ROUTES.knowledge, icon: BookOpen },
     { name: "Projects", href: APP_ROUTES.projects, icon: FolderKanban },
-    { name: "Contracts", href: APP_ROUTES.contracts, icon: FileSignature },
-    ...(isAdmin
-      ? [{ name: "Users", href: APP_ROUTES.users, icon: Users }]
-      : []),
+    ...(isAdmin ? [{ name: "Users", href: APP_ROUTES.users, icon: Users }] : []),
   ];
 
   const userMenuItems: MenuProps["items"] = [
@@ -98,9 +90,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 
         <nav className="space-y-1 px-3">
           {navigation.map((item) => {
-            const isActive =
-              pathname === item.href ||
-              pathname?.startsWith(item.href + "/");
+            const isActive = pathname === item.href || pathname?.startsWith(item.href + "/");
             return (
               <Link
                 key={item.name}
@@ -115,15 +105,11 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
               >
                 <item.icon
                   className={`shrink-0 ${
-                    isActive
-                      ? "text-zinc-950"
-                      : "text-zinc-400 group-hover:text-zinc-600"
+                    isActive ? "text-zinc-950" : "text-zinc-400 group-hover:text-zinc-600"
                   } ${isDesktopCollapsed && !isMobile ? "w-6 h-6" : "w-5 h-5 mr-3"}`}
                   aria-hidden="true"
                 />
-                {(!isDesktopCollapsed || isMobile) && (
-                  <span className="truncate">{item.name}</span>
-                )}
+                {(!isDesktopCollapsed || isMobile) && <span className="truncate">{item.name}</span>}
               </Link>
             );
           })}
@@ -141,9 +127,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
             <UserAvatar name={user.name} email={user.email} />
             {(!isDesktopCollapsed || isMobile) && (
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-medium text-zinc-900 truncate">
-                  {user.name || "User"}
-                </p>
+                <p className="text-sm font-medium text-zinc-900 truncate">{user.name || "User"}</p>
                 <div className="flex items-center gap-1 mt-0.5">
                   {user.roles.map((role) => (
                     <Tag
@@ -241,10 +225,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
             <div className="h-5 w-px bg-zinc-200 mx-1" />
             <Dropdown menu={{ items: userMenuItems }} placement="bottomRight" trigger={["click"]}>
               <button className="flex items-center gap-2 p-1 pr-2 rounded-full hover:bg-zinc-100 transition-colors">
-                <UserAvatar
-                  name={user?.name ?? ""}
-                  email={user?.email ?? ""}
-                />
+                <UserAvatar name={user?.name ?? ""} email={user?.email ?? ""} />
               </button>
             </Dropdown>
           </div>
