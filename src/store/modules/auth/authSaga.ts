@@ -38,7 +38,7 @@ function* loginWorker(action: { type: string; payload: LoginPayload }) {
       url: API_ENDPOINTS.auth.login,
       method: "POST",
       data: action.payload,
-      withCredentials: true,
+      withCredentials: false,
     });
     const { accessToken, refreshToken, user } = response.data;
     storage.setAccessToken(accessToken);
@@ -71,7 +71,7 @@ function* registerWorker(action: { type: string; payload: RegisterPayload }) {
       url: API_ENDPOINTS.auth.register,
       method: "POST",
       data: action.payload,
-      withCredentials: true,
+      withCredentials: false,
     });
     const { accessToken, refreshToken, user } = response.data;
     storage.setAccessToken(accessToken);
@@ -103,7 +103,7 @@ function* logoutWorker() {
     yield call(apiRequest, {
       url: API_ENDPOINTS.auth.logout,
       method: "POST",
-      withCredentials: true,
+      withCredentials: false,
     });
     storage.clearAll();
     clearTokenCookie();

@@ -28,7 +28,7 @@ const refreshTokenFn = async (): Promise<string | null> => {
     const response = await axios.post<{ data: { accessToken: string } }>(
       `${baseURL}${API_ENDPOINTS.auth.refresh}`,
       { refresh_token: storedRefreshToken },
-      { withCredentials: true },
+      { withCredentials: false },
     );
     const newToken = response.data.data.accessToken;
     console.log("[Auth] Token refresh API succeeded");
