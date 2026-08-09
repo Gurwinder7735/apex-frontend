@@ -29,7 +29,7 @@ export async function generateMetadata({
       const description = isProtected
         ? `${name} — Password protected proposal`
         : proposal.clientName
-          ? `Prepared repared for ${proposal.clientName}`
+          ? `Prepared for ${proposal.clientName}`
           : "AI-generated proposal";
 
       return {
