@@ -14,10 +14,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   try {
     const { token } = await params;
-    const res = await fetch(
-      `${API_BASE_URL}/api/v1/proposals/proposals/share/${token}`,
-      { next: { revalidate: 60 } },
-    );
+    const res = await fetch(`${API_BASE_URL}/api/v1/proposals/proposals/share/${token}`, {
+      next: { revalidate: 60 },
+    });
 
     if (res.ok) {
       const json = await res.json();
@@ -30,7 +29,7 @@ export async function generateMetadata({
       const description = isProtected
         ? `${name} — Password protected proposal`
         : proposal.clientName
-          ? `Proposal prepared for ${proposal.clientName}`
+          ? `Prepared repared for ${proposal.clientName}`
           : "AI-generated proposal";
 
       return {
@@ -59,10 +58,6 @@ export async function generateMetadata({
   };
 }
 
-export default function SharedProposalLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function SharedProposalLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

@@ -3,15 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Typography } from "antd";
-import {
-  ArrowUp,
-  Building2,
-  Calendar,
-  FileText,
-  Lock,
-  Printer,
-  User,
-} from "lucide-react";
+import { ArrowUp, Building2, Calendar, FileText, Lock, Printer, User } from "lucide-react";
 
 import { ProposalDocumentRenderer } from "@/components/features/Proposals/ProposalDocumentRenderer";
 import { InlineCommentLayer } from "@/components/features/BRD/InlineCommentLayer";
@@ -82,10 +74,10 @@ export default function SharedProposalPage() {
           <FileText className="w-8 h-8 text-zinc-400" />
         </div>
         <Typography.Title level={3} className="!text-zinc-700 !mb-2 !font-semibold">
-          Proposal not found
+          Document not found
         </Typography.Title>
         <Typography.Text className="text-zinc-400 text-center max-w-xs">
-          This proposal is not available or the link has expired.
+          This document is not available or the link has expired.
         </Typography.Text>
       </div>
     );
@@ -116,17 +108,12 @@ export default function SharedProposalPage() {
   //    proposals since the primary review pattern is inline pin marks.
   //    A follow-up can add CommentsSection at the bottom easily.)
 
-  const inlineTopLevel = allComments.filter(
-    (c) => c.anchorY != null && !c.parentId,
-  );
+  const inlineTopLevel = allComments.filter((c) => c.anchorY != null && !c.parentId);
   const inlineTopLevelIds = new Set(inlineTopLevel.map((c) => c.id));
-  const inlineReplies = allComments.filter(
-    (c) => c.parentId && inlineTopLevelIds.has(c.parentId),
-  );
+  const inlineReplies = allComments.filter((c) => c.parentId && inlineTopLevelIds.has(c.parentId));
 
   const aiContent = proposal.aiContent || {};
-  const documentContent =
-    aiContent["improved-proposal.md"] || aiContent["proposal.md"] || "";
+  const documentContent = aiContent["improved-proposal.md"] || aiContent["proposal.md"] || "";
 
   return (
     <div className="min-h-screen bg-white print:bg-white">
@@ -183,17 +170,13 @@ export default function SharedProposalPage() {
         <div className="py-8 sm:py-14 border-b border-zinc-100 mb-8 sm:mb-12 print:py-8 print:mb-8">
           {logoUrl && (
             <div className="hidden print:block mb-8">
-              <img
-                src={logoUrl}
-                alt={companyName}
-                className="h-12 w-auto object-contain"
-              />
+              <img src={logoUrl} alt={companyName} className="h-12 w-auto object-contain" />
             </div>
           )}
           <div className="max-w-3xl">
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 mb-3">
+            {/* <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 mb-3">
               Proposal
-            </p>
+            </p> */}
             <h1 className="text-2xl sm:text-4xl font-bold text-zinc-900 leading-tight mb-6 sm:mb-8 tracking-tight">
               {proposal.title || proposal.name}
             </h1>
@@ -205,9 +188,7 @@ export default function SharedProposalPage() {
                   </p>
                   <div className="flex items-center gap-2">
                     <Building2 className="w-4 h-4 text-zinc-400" />
-                    <p className="text-sm font-semibold text-zinc-800">
-                      {proposal.clientName}
-                    </p>
+                    <p className="text-sm font-semibold text-zinc-800">{proposal.clientName}</p>
                   </div>
                 </div>
               )}
@@ -263,9 +244,7 @@ export default function SharedProposalPage() {
             // ``ProposalComment`` is structurally identical to
             // ``BRDComment``; the cast keeps ``InlineCommentLayer`` fully
             // decoupled from either domain model.
-            comments={
-              [...inlineTopLevel, ...inlineReplies] as unknown as BRDComment[]
-            }
+            comments={[...inlineTopLevel, ...inlineReplies] as unknown as BRDComment[]}
             onCommentAdded={(c) => addComment(c as unknown as ProposalComment)}
             onCommentDeleted={deleteComment}
             onCommentUpdated={(c) => updateComment(c as unknown as ProposalComment)}
