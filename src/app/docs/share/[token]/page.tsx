@@ -61,7 +61,7 @@ export default function SharedProposalPage() {
       <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="text-center">
           <div className="w-10 h-10 border-2 border-zinc-200 border-t-zinc-900 rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-sm text-zinc-400">Loading proposal...</p>
+          <p className="text-sm text-zinc-400">Loading...</p>
         </div>
       </div>
     );
