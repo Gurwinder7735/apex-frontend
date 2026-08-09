@@ -23,6 +23,14 @@ import {
   Essentials,
   Indent,
   IndentBlock,
+  Image,
+  ImageToolbar,
+  ImageCaption,
+  ImageStyle,
+  ImageResize,
+  ImageUpload,
+  AutoImage,
+  Base64UploadAdapter,
 } from "ckeditor5";
 import "ckeditor5/ckeditor5.css";
 
@@ -92,6 +100,15 @@ export function BRDContentEditor({ content, onChange, disabled = false }: Props)
             Code,
             Indent,
             IndentBlock,
+            // Image plugins
+            Image,
+            ImageToolbar,
+            ImageCaption,
+            ImageStyle,
+            ImageResize,
+            ImageUpload,
+            AutoImage,
+            Base64UploadAdapter,
           ],
           toolbar: {
             items: [
@@ -112,19 +129,60 @@ export function BRDContentEditor({ content, onChange, disabled = false }: Props)
               "insertTable",
               "horizontalLine",
               "codeBlock",
+              "|",
+              "uploadImage",
             ],
           },
           heading: {
             options: [
               { model: "paragraph" as const, title: "Paragraph", class: "ck-heading_paragraph" },
-              { model: "heading1" as const, view: "h1", title: "Heading 1", class: "ck-heading_heading1" },
-              { model: "heading2" as const, view: "h2", title: "Heading 2", class: "ck-heading_heading2" },
-              { model: "heading3" as const, view: "h3", title: "Heading 3", class: "ck-heading_heading3" },
-              { model: "heading4" as const, view: "h4", title: "Heading 4", class: "ck-heading_heading4" },
+              {
+                model: "heading1" as const,
+                view: "h1",
+                title: "Heading 1",
+                class: "ck-heading_heading1",
+              },
+              {
+                model: "heading2" as const,
+                view: "h2",
+                title: "Heading 2",
+                class: "ck-heading_heading2",
+              },
+              {
+                model: "heading3" as const,
+                view: "h3",
+                title: "Heading 3",
+                class: "ck-heading_heading3",
+              },
+              {
+                model: "heading4" as const,
+                view: "h4",
+                title: "Heading 4",
+                class: "ck-heading_heading4",
+              },
             ],
           },
           table: {
             contentToolbar: ["tableColumn", "tableRow", "mergeTableCells"],
+          },
+          image: {
+            toolbar: [
+              "imageStyle:inline",
+              "imageStyle:block",
+              "imageStyle:side",
+              "|",
+              "imageTextAlternative",
+              "toggleImageCaption",
+              "|",
+              "resizeImage",
+            ],
+            resizeUnit: "%" as const,
+            resizeOptions: [
+              { name: "resizeImage:original", value: null, label: "Original" },
+              { name: "resizeImage:25", value: "25", label: "25%" },
+              { name: "resizeImage:50", value: "50", label: "50%" },
+              { name: "resizeImage:75", value: "75", label: "75%" },
+            ],
           },
           codeBlock: {
             languages: [
